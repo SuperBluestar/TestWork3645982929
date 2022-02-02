@@ -12,6 +12,9 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const ADMIN   = 0b1111111111;
+    const USER    = 0b0000000001;
+    const CLIENT  = 0b0000000010;
     /**
      * The attributes that are mass assignable.
      *
@@ -20,6 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name',
         'email',
+        'role',
         'avatar',
         'password',
     ];
@@ -40,13 +44,23 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $casts = [
-        'is_admin' => 'boolean',
+        'role' => 'integer',
         'email_verified_at' => 'datetime',
     ];
 
     public function isAdmin(): bool
     {
-      return $this->is_admin;
+      return ($this->role and ADMIN) == ADMIN;
+    }
+
+    public function isUser(): bool
+    {
+      return ($this->role and USER) == USER;
+    }
+
+    public function isClient(): bool
+    {
+      return ($this->role and CLIENT) == CLIENT;
     }
 
     public function messages()

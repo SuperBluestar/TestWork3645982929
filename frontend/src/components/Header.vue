@@ -10,6 +10,7 @@
       </div>
       <router-link to="/" v-else>
         <HomeIcon class="w-6 h-6 text-white" />
+        <span class="sr-only">Home</span>
       </router-link>
       <div class="inline-flex items-center space-x-5" v-if="authUser">
         <router-link to="/user">{{ authUser.name }}</router-link>

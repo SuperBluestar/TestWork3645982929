@@ -1,5 +1,5 @@
 export default function guest({ next, store }) {
-  const storageItem = window.localStorage.getItem("guest");
+  const storageItem = window.localStorage.getItem("lvtest-guest");
   if (storageItem === "isNotGuest" && !store.getters["auth/authUser"]) {
     store.dispatch("auth/getAuthUser").then(() => {
       if (store.getters["auth/authUser"]) {

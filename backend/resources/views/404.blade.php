@@ -18,14 +18,19 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       background-color: azure;
+      display: flex;
+      min-height: 100vh;
+      justify-content: center;
+      align-items: center;
     }
 
     article {
       padding: 2rem;
       text-align: center;
       background-color: white;
+      width: calc(100% - 2rem);
       max-width: 48rem;
-      margin: 0 auto;
+      margin: auto 1rem;
       border: 1px solid #eee;
       border-top: none;
     }
@@ -34,10 +39,7 @@
 
 <body>
   <article>
-    <h1>Laravel Vue SPA - API</h1>
-    <p>Docs for how this application is built can be found at:
-      <a href="https://laravelvuespa.com/">laravelvuespa.com</a>
-    </p>
+    <h1>Not Found Page(404)</h1>
   </article>
 </body>
 
