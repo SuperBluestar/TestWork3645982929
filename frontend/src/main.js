@@ -6,7 +6,7 @@ import "@/assets/css/tailwind.css";
 import device from "vue-device-detector";
 
 Vue.config.productionTip = false;
-Vue.use(device)
+Vue.use(device);
 
 new Vue({
   router,

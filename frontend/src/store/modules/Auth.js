@@ -36,9 +36,8 @@ export const mutations = {
 export const actions = {
   logout({ commit }) {
     commit("SET_USER", null);
-    setToken("")
-    if (router.currentRoute.name !== "login")
-      router.push({ path: "/login" });
+    setToken("");
+    if (router.currentRoute.name !== "login") router.push({ path: "/login" });
   },
   async getAuthUser({ commit }) {
     commit("SET_LOADING", true);
@@ -47,10 +46,10 @@ export const actions = {
       if (res.data.success) {
         commit("SET_USER", res.data.data);
         commit("SET_LOADING", false);
-        if( router.currentRoute.query.redirect ) {
-          router.push(router.currentRoute.query.redirect)
+        if (router.currentRoute.query.redirect) {
+          router.push(router.currentRoute.query.redirect);
         } else {
-          router.push("/blogs"); 
+          router.push("/blogs");
         }
       } else {
         commit("SET_USER", null);
@@ -72,8 +71,8 @@ export const actions = {
         setToken(data.data.token);
         commit("SET_USER", data.data);
         commit("SET_ERROR", "");
-        if( router.currentRoute.query.redirect ) {
-          router.push(router.currentRoute.query.redirect)
+        if (router.currentRoute.query.redirect) {
+          router.push(router.currentRoute.query.redirect);
         } else {
           router.push("/blogs");
         }
@@ -82,7 +81,7 @@ export const actions = {
         commit("SET_INFO", "Failed to login");
         commit("SET_ERROR", data.message);
       }
-    } catch(error) {
+    } catch (error) {
       commit("SET_INFO", "Failed to login");
       commit("SET_ERROR", getError(error));
     }
@@ -97,16 +96,16 @@ export const actions = {
         setToken(data.data.token);
         commit("SET_USER", data.data);
         commit("SET_ERROR", "");
-        if( router.currentRoute.query.redirect ) {
-          router.push(router.currentRoute.query.redirect)
+        if (router.currentRoute.query.redirect) {
+          router.push(router.currentRoute.query.redirect);
         } else {
-          router.push("/blogs"); 
+          router.push("/blogs");
         }
       } else {
         commit("SET_INFO", "Failed to register");
         commit("SET_ERROR", data.message);
       }
-    } catch(error) {
+    } catch (error) {
       commit("SET_INFO", "Failed to register");
       commit("SET_ERROR", getError(error));
     }
@@ -128,13 +127,13 @@ export const getters = {
     return state.error;
   },
   isAdmin: (state) => {
-    return state.user ? ((state.user.rolebinary & ADMIN) === ADMIN) : false;
+    return state.user ? (state.user.rolebinary & ADMIN) === ADMIN : false;
   },
   isEditor: (state) => {
-    return state.user ? ((state.user.rolebinary & EDITOR) === EDITOR) : false;
+    return state.user ? (state.user.rolebinary & EDITOR) === EDITOR : false;
   },
   isUser: (state) => {
-    return state.user ? ((state.user.rolebinary & USER) === USER) : false;
+    return state.user ? (state.user.rolebinary & USER) === USER : false;
   },
   error: (state) => {
     return state.error;

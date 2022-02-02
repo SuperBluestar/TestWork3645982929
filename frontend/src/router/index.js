@@ -62,7 +62,7 @@ const routes = [
     meta: { middleware: [guest] },
     component: () =>
       import(/* webpackChunkName: "register" */ "../views/NotFound"),
-  }
+  },
 ];
 
 const router = new VueRouter({
