@@ -32,7 +32,7 @@ class AuthController extends BaseController
             return $this->sendResponse(new UserResource($authUser), 'User signed in');
         } 
         else{ 
-            return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
+            return $this->sendError('Unauthorised.', ['error'=>'Unauthorised'], 401);
         } 
     }
 

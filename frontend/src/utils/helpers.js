@@ -1,3 +1,5 @@
+import { authClient } from '@/services/AuthService';
+
 export const getError = (error) => {
   const errorMessage = "API Error, please try again.";
 
@@ -20,3 +22,17 @@ export const getError = (error) => {
 
   return errorMessage;
 };
+
+export const setToken = (token) => {
+  if (token) {
+    window.localStorage.setItem("lvtest-token", token);
+    authClient.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  } else {
+    window.localStorage.removeItem("lvtest-token");
+    delete authClient.defaults.headers.common["Authorization"];
+  }
+}
+
+export const getToken = () => {
+  return window.localStorage.getItem("lvtest-token");
+}

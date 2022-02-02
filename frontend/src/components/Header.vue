@@ -6,13 +6,14 @@
           <HomeIcon class="w-6 h-6 text-white" />
           <span class="sr-only">Dashboard</span>
         </router-link>
-        <router-link to="/users" v-if="isAdmin">Users</router-link>
       </div>
       <router-link to="/" v-else>
         <HomeIcon class="w-6 h-6 text-white" />
         <span class="sr-only">Home</span>
       </router-link>
       <div class="inline-flex items-center space-x-5" v-if="authUser">
+        <router-link to="/users" v-if="isAdmin">Users</router-link>
+        <div class="mx-2">|</div>
         <router-link to="/user">{{ authUser.name }}</router-link>
         <Logout />
       </div>

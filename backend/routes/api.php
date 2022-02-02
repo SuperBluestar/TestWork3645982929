@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BlogController;
+use App\Http\Controllers\API\UserController;
 
 use App\Models\User;
 
@@ -22,12 +23,10 @@ Route::post('login', [AuthController::class, 'signin']);
 Route::post('register', [AuthController::class, 'signup']);
 
 Route::middleware('auth:sanctum')->group( function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
+    Route::get('/user', [UserController::class, 'self']);
     // Route::resource('blogs', BlogController::class);
     Route::get('/blogs', [BlogController::class, 'index']);
-    Route::post('/blogs/{id}', [BlogController::class, 'show']);
+    Route::get('/blogs/{id}', [BlogController::class, 'show']);
     Route::post('/blogs', [BlogController::class, 'store'])->middleware('role:'.USER::EDITOR);
     Route::put('/blogs/{id}', [BlogController::class, 'update'])->middleware('role:'.USER::EDITOR);
     Route::delete('/blogs/{id}', [BlogController::class, 'destroy'])->middleware('role:'.USER::ADMIN);

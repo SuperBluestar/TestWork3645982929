@@ -15,7 +15,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     const ADMIN     = 0b1111111111;
-    const GUEST     = 0b0000000001;
+    const USER     = 0b0000000001;
     const EDITOR    = 0b0000000010;
     /**
      * The attributes that are mass assignable.
@@ -56,9 +56,9 @@ class User extends Authenticatable
         return ($this->role & User::ADMIN) == User::ADMIN;
     }
 
-    public function isGuest(): bool
+    public function isUser(): bool
     {
-        return ($this->role & User::GUEST) == User::GUEST;
+        return ($this->role & User::USER) == User::USER;
     }
 
     public function isEditor(): bool

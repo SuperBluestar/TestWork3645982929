@@ -1,36 +1,40 @@
 <template>
-  <form @submit.prevent="login">
-    <BaseInput
-      type="email"
-      label="Email"
-      name="email"
-      v-model="email"
-      autocomplete="email"
-      placeholder="luke@jedi.com"
-      class="mb-2"
-    />
-    <BaseInput
-      type="password"
-      label="Password"
-      name="password"
-      v-model="password"
-      class="mb-4"
-    />
-    <div class="flex justify-between">
-      <BaseBtn type="submit" text="Login" />
-      <router-link to="/forgot-password" class="text-sm base-link">
-        Forgot your password?
-      </router-link>
+  <form class="relative" @submit.prevent="login">
+    <div v-if="loading" class="absolute w-full h-full flex items-center justify-center bg-gray-500 bg-opacity-25">
+      Loading
     </div>
-    <FlashMessage :error="error" />
+    <div class="m-5">
+      <BaseInput
+        type="email"
+        label="Email"
+        name="email"
+        v-model="email"
+        autocomplete="email"
+        placeholder="luke@jedi.com"
+        class="mb-2"
+      />
+      <BaseInput
+        type="password"
+        label="Password"
+        name="password"
+        v-model="password"
+        class="mb-4"
+      />
+      <div class="flex justify-between">
+        <BaseBtn type="submit" text="Login" />
+        <router-link to="/forgot-password" class="text-sm base-link flex items-center">
+          Forgot your password?
+        </router-link>
+      </div>
+      <FlashMessage :error="authError" />
+    </div>
   </form>
 </template>
 
 <script>
-import { getError } from "@/utils/helpers";
+import { mapGetters } from "vuex";
 import BaseBtn from "@/components/BaseBtn";
 import BaseInput from "@/components/BaseInput";
-import AuthService from "@/services/AuthService";
 import FlashMessage from "@/components/FlashMessage";
 
 export default {
@@ -47,6 +51,9 @@ export default {
       error: null,
     };
   },
+  computed: {
+    ...mapGetters("auth", ["authError", "loading"]),
+  },
   methods: {
     async login() {
       const device_name = Object.keys(this.$device).filter(key => this.$device[key])?.[0] || "Unknown Device";
@@ -56,22 +63,7 @@ export default {
         device_name
       };
       this.error = null;
-      try {
-        await AuthService.login(payload);
-        const authUser = await this.$store.dispatch("auth/getAuthUser");
-        if (authUser) {
-          this.$store.dispatch("auth/setGuest", { value: "isNotGuest" });
-          this.$router.push("/dashboard");
-        } else {
-          const error = Error(
-            "Unable to fetch user after login, check your API settings."
-          );
-          error.name = "Fetch User";
-          throw error;
-        }
-      } catch (error) {
-        this.error = getError(error);
-      }
+      await this.$store.dispatch("auth/setAuth", payload);
     },
   },
 };

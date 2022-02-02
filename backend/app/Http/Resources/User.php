@@ -14,7 +14,7 @@ class User extends JsonResource
      */
     public function toArray($request)
     {
-        $role = "guest";
+        $role = "user";
         if ($this->isAdmin()) {
           $role = "admin";
         } else if ($this->isEditor()) {
@@ -25,6 +25,7 @@ class User extends JsonResource
           'name' => $this->name,
           'email' => $this->email,
           'role' => $role,
+          'rolebinary' => $this->role,
           'token' => $this->token,
           'emailVerified' => $this->email_verified_at,
         ];
