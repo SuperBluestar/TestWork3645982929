@@ -16,25 +16,6 @@ const routes = [
     component: () => import(/* webpackChunkName: "home" */ "../views/Home"),
   },
   {
-    path: "/dashboard",
-    name: "dashboard",
-    meta: { middleware: [auth] },
-    component: () =>
-      import(/* webpackChunkName: "dashboard" */ "../views/Dashboard"),
-  },
-  {
-    path: "/user",
-    name: "user",
-    meta: { middleware: [auth] },
-    component: () => import(/* webpackChunkName: "user" */ "../views/User"),
-  },
-  {
-    path: "/users",
-    name: "users",
-    meta: { middleware: [auth, admin] },
-    component: () => import(/* webpackChunkName: "users" */ "../views/Users"),
-  },
-  {
     path: "/login",
     name: "login",
     meta: { middleware: [guest] },
@@ -46,28 +27,6 @@ const routes = [
     meta: { middleware: [guest] },
     component: () =>
       import(/* webpackChunkName: "register" */ "../views/Register"),
-  },
-  {
-    path: "/reset-password",
-    name: "resetPassword",
-    meta: { middleware: [guest] },
-    component: () =>
-      import(/* webpackChunkName: "reset-password" */ "../views/ResetPassword"),
-  },
-  {
-    path: "/forgot-password",
-    name: "forgotPassword",
-    meta: { middleware: [guest] },
-    component: () =>
-      import(
-        /* webpackChunkName: "forgot-password" */ "../views/ForgotPassword"
-      ),
-  },
-  {
-    path: "/:catchAll(.*)",
-    name: "notFound",
-    component: () =>
-      import(/* webpackChunkName: "not-found" */ "../views/NotFound"),
   },
 ];
 

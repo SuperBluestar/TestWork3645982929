@@ -28,7 +28,8 @@ authClient.interceptors.response.use(
 
 export default {
   async login(payload) {
-    await authClient.get("/sanctum/csrf-cookie");
+    let res = await authClient.get("/sanctum/csrf-cookie");
+    console.log(res)
     return authClient.post("/login", payload);
   },
   logout() {

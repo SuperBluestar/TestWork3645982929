@@ -49,9 +49,11 @@ export default {
   },
   methods: {
     async login() {
+      const device_name = Object.keys(this.$device).filter(key => this.$device[key])?.[0] || "Unknown Device";
       const payload = {
         email: this.email,
         password: this.password,
+        device_name
       };
       this.error = null;
       try {
