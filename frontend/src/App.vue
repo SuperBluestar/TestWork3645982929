@@ -25,7 +25,7 @@ export default {
     Header,
   },
   computed: {
-    ...mapGetters('auth', ['initialLoading'])
+    ...mapGetters("auth", ["initialLoading"]),
   },
   mounted() {
     let token = getToken();
@@ -33,7 +33,7 @@ export default {
     (async () => {
       await this.$store.dispatch("auth/getAuthUser");
     })();
-  }
+  },
 };
 </script>
 

@@ -1,6 +1,17 @@
 <template>
   <form class="relative" @submit.prevent="registerUser">
-    <div v-if="loading" class="absolute w-full h-full flex items-center justify-center bg-gray-500 bg-opacity-25">
+    <div
+      v-if="loading"
+      class="
+        absolute
+        w-full
+        h-full
+        flex
+        items-center
+        justify-center
+        bg-gray-500 bg-opacity-25
+      "
+    >
       Loading
     </div>
     <div class="m-5">
@@ -67,14 +78,16 @@ export default {
   },
   methods: {
     registerUser() {
-      const device_name = Object.keys(this.$device).filter(key => this.$device[key])?.[0] || "Unknown Device";
+      const device_name =
+        Object.keys(this.$device).filter((key) => this.$device[key])?.[0] ||
+        "Unknown Device";
       this.error = null;
       const payload = {
         name: this.name,
         email: this.email,
         password: this.password,
         confirm_password: this.passwordConfirm,
-        device_name
+        device_name,
       };
 
       (async () => {

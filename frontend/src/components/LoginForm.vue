@@ -1,6 +1,17 @@
 <template>
   <form class="relative" @submit.prevent="login">
-    <div v-if="loading" class="absolute w-full h-full flex items-center justify-center bg-gray-500 bg-opacity-25">
+    <div
+      v-if="loading"
+      class="
+        absolute
+        w-full
+        h-full
+        flex
+        items-center
+        justify-center
+        bg-gray-500 bg-opacity-25
+      "
+    >
       Loading
     </div>
     <div class="m-5">
@@ -22,7 +33,10 @@
       />
       <div class="flex justify-between">
         <BaseBtn type="submit" text="Login" />
-        <router-link to="/forgot-password" class="text-sm base-link flex items-center">
+        <router-link
+          to="/forgot-password"
+          class="text-sm base-link flex items-center"
+        >
           Forgot your password?
         </router-link>
       </div>
@@ -56,11 +70,13 @@ export default {
   },
   methods: {
     async login() {
-      const device_name = Object.keys(this.$device).filter(key => this.$device[key])?.[0] || "Unknown Device";
+      const device_name =
+        Object.keys(this.$device).filter((key) => this.$device[key])?.[0] ||
+        "Unknown Device";
       const payload = {
         email: this.email,
         password: this.password,
-        device_name
+        device_name,
       };
       this.error = null;
       await this.$store.dispatch("auth/login", payload);
