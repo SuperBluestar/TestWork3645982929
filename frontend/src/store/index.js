@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import * as auth from "@/store/modules/Auth";
+import * as blog from "@/store/modules/Blog";
 import * as user from "@/store/modules/User";
 import * as message from "@/store/modules/Message";
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
 
   modules: {
     auth,
+    blog,
     user,
     message,
   },

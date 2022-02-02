@@ -9,7 +9,7 @@
         label="Name"
         name="name"
         v-model="name"
-        placeholder="Luke Skywalker"
+        placeholder="Super Bluestar"
         class="mb-2"
       />
       <BaseInput
@@ -17,7 +17,7 @@
         label="Email"
         name="email"
         v-model="email"
-        placeholder="luke@jedi.com"
+        placeholder="alexander116gm@gmail.com"
         class="mb-2"
       />
       <BaseInput
@@ -66,7 +66,7 @@ export default {
     ...mapGetters("auth", ["authError", "loading"]),
   },
   methods: {
-    async registerUser() {
+    registerUser() {
       const device_name = Object.keys(this.$device).filter(key => this.$device[key])?.[0] || "Unknown Device";
       this.error = null;
       const payload = {
@@ -76,8 +76,10 @@ export default {
         confirm_password: this.passwordConfirm,
         device_name
       };
-      
-      await this.$store.dispatch("auth/register", payload);
+
+      (async () => {
+        await this.$store.dispatch("auth/register", payload);
+      })();
     },
   },
 };

@@ -1,30 +1,9 @@
 import axios from "axios";
-// import store from "@/store";
 
 export const authClient = axios.create({
   baseURL: `${process.env.VUE_APP_API_URL}/api`,
   withCredentials: false, // required to handle the CSRF token
 });
-
-/*
- * Add a response interceptor
- */
-// authClient.interceptors.response.use(
-//   (response) => {
-//     return response;
-//   },
-//   function (error) {
-//     if (
-//       error.response &&
-//       [401, 419].includes(error.response.status) &&
-//       store.getters["auth/authUser"] &&
-//       !store.getters["auth/guest"]
-//     ) {
-//       store.dispatch("auth/logout");
-//     }
-//     return Promise.reject(error);
-//   }
-// );
 
 export default {
   async login(payload) {

@@ -10,7 +10,7 @@
         name="email"
         v-model="email"
         autocomplete="email"
-        placeholder="luke@jedi.com"
+        placeholder="alexander116gm@gmail.com"
         class="mb-2"
       />
       <BaseInput
@@ -63,7 +63,7 @@ export default {
         device_name
       };
       this.error = null;
-      await this.$store.dispatch("auth/setAuth", payload);
+      await this.$store.dispatch("auth/login", payload);
     },
   },
 };

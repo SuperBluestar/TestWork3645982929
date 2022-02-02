@@ -12,9 +12,13 @@
         <span class="sr-only">Home</span>
       </router-link>
       <div class="inline-flex items-center space-x-5" v-if="authUser">
-        <router-link to="/users" v-if="isAdmin">Users</router-link>
-        <div class="mx-2">|</div>
-        <router-link to="/user">{{ authUser.name }}</router-link>
+        <template v-if="isUser">
+          <router-link to="/blogs">Blogs</router-link>
+        </template>
+        <template v-if="isAdmin">
+          <router-link to="/users">Users</router-link>
+        </template>
+        <router-link to="/profile">{{ authUser.name }}</router-link>
         <Logout />
       </div>
       <router-link
@@ -43,7 +47,7 @@ export default {
     LoginIcon,
   },
   computed: {
-    ...mapGetters("auth", ["authUser", "isAdmin"]),
+    ...mapGetters("auth", ["authUser", "isAdmin", "isUser"]),
   },
 };
 </script>

@@ -40,14 +40,14 @@ class AuthController extends BaseController
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
             'password' => 'required',
             'confirm_password' => 'required|same:password',
             'device_name' => 'required'
         ]);
    
         if($validator->fails()){
-            return $this->sendError('Error validation', $validator->errors());       
+            return $this->sendError('Error validation', $validator->errors(), 400);       
         }
    
         $input = $request->all();

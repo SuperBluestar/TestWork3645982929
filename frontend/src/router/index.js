@@ -1,11 +1,10 @@
 import Vue from "vue";
 import store from "@/store/index";
 import VueRouter from "vue-router";
-// import admin from "@/middleware/admin";
-// import editor from "@/middleware/editor";
 import user from "@/middleware/user";
 import guest from "@/middleware/guest";
 import middlewarePipeline from "@/router/middlewarePipeline";
+import editor from "@/middleware/editor";
 
 Vue.use(VueRouter);
 
@@ -34,11 +33,35 @@ const routes = [
     name: "blogs-list",
     meta: { middleware: [user] },
     component: () =>
-      import(/* webpackChunkName: "register" */ "../views/Blogs"),
+      import(/* webpackChunkName: "register" */ "../views/Blog/Blogs"),
+  },
+  {
+    path: "/blogs/create",
+    name: "blog-create",
+    meta: { middleware: [editor] },
+    component: () =>
+      import(/* webpackChunkName: "register" */ "../views/Blog/BlogPost"),
+  },
+  {
+    path: "/blogs/view/:id",
+    name: "blog-view",
+    meta: { middleware: [user] },
+    component: () =>
+      import(/* webpackChunkName: "register" */ "../views/Blog/BlogView"),
+  },
+  {
+    path: "/blogs/update",
+    name: "blog-update",
+    meta: { middleware: [editor] },
+    component: () =>
+      import(/* webpackChunkName: "register" */ "../views/Blog/BlogPost"),
   },
   {
     path: "*",
-    redirect: { name: 'home' }
+    name: "not-found",
+    meta: { middleware: [guest] },
+    component: () =>
+      import(/* webpackChunkName: "register" */ "../views/NotFound"),
   }
 ];
 

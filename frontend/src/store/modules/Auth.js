@@ -12,6 +12,7 @@ export const state = {
   loading: false,
   initialLoading: true,
   error: null,
+  info: null,
 };
 
 export const mutations = {
@@ -27,14 +28,17 @@ export const mutations = {
   SET_ERROR(state, error) {
     state.error = error;
   },
+  SET_INFO(state, info) {
+    state.info = info;
+  },
 };
 
 export const actions = {
   logout({ commit }) {
-      commit("SET_USER", null);
-      setToken("")
-      if (router.currentRoute.name !== "login")
-        router.push({ path: "/login" });
+    commit("SET_USER", null);
+    setToken("")
+    if (router.currentRoute.name !== "login")
+      router.push({ path: "/login" });
   },
   async getAuthUser({ commit }) {
     commit("SET_LOADING", true);
@@ -55,11 +59,11 @@ export const actions = {
     } catch (error) {
       commit("SET_LOADING", false);
       commit("SET_USER", null);
-      commit("SET_ERROR", getError(error));
+      // commit("SET_ERROR", getError(error));
     }
     commit("SET_INITIALLOADING", false);
   },
-  async setAuth({ commit }, payload) {
+  async login({ commit }, payload) {
     commit("SET_LOADING", true);
     try {
       const res = await AuthService.login(payload);
@@ -71,13 +75,15 @@ export const actions = {
         if( router.currentRoute.query.redirect ) {
           router.push(router.currentRoute.query.redirect)
         } else {
-          router.push("/blogs"); 
+          router.push("/blogs");
         }
       } else {
         // alert(data.message);
+        commit("SET_INFO", "Failed to login");
         commit("SET_ERROR", data.message);
       }
     } catch(error) {
+      commit("SET_INFO", "Failed to login");
       commit("SET_ERROR", getError(error));
     }
     commit("SET_LOADING", false);
@@ -86,8 +92,10 @@ export const actions = {
     commit("SET_LOADING", true);
     try {
       let res = await AuthService.registerUser(payload);
-      if (res.data.success) {
-        commit("SET_USER", res.data.data);
+      const { data } = res;
+      if (data.success) {
+        setToken(data.data.token);
+        commit("SET_USER", data.data);
         commit("SET_ERROR", "");
         if( router.currentRoute.query.redirect ) {
           router.push(router.currentRoute.query.redirect)
@@ -95,13 +103,21 @@ export const actions = {
           router.push("/blogs"); 
         }
       } else {
-        commit("SET_ERROR", res.data.message);
+        commit("SET_INFO", "Failed to register");
+        commit("SET_ERROR", data.message);
       }
     } catch(error) {
+      commit("SET_INFO", "Failed to register");
       commit("SET_ERROR", getError(error));
     }
     commit("SET_LOADING", false);
-  }
+  },
+  clearError({ commit }) {
+    commit("SET_ERROR", "");
+  },
+  clearInfo({ commit }) {
+    commit("SET_INFO", "");
+  },
 };
 
 export const getters = {
@@ -112,16 +128,19 @@ export const getters = {
     return state.error;
   },
   isAdmin: (state) => {
-    return state.user ? (state.user.rolebinary & ADMIN === ADMIN) : false;
+    return state.user ? ((state.user.rolebinary & ADMIN) === ADMIN) : false;
   },
   isEditor: (state) => {
-    return state.user ? (state.user.rolebinary & EDITOR === EDITOR) : false;
+    return state.user ? ((state.user.rolebinary & EDITOR) === EDITOR) : false;
   },
   isUser: (state) => {
-    return state.user ? (state.user.rolebinary & USER === USER) : false;
+    return state.user ? ((state.user.rolebinary & USER) === USER) : false;
   },
   error: (state) => {
     return state.error;
+  },
+  info: (state) => {
+    return state.info;
   },
   loading: (state) => {
     return state.loading;

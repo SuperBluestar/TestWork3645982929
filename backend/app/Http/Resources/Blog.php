@@ -18,8 +18,8 @@ class Blog extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'created_at' => $this->created_at, //->format('m/d/Y'),
-            'updated_at' => $this->updated_at, //->format('m/d/Y'),
+            'created_at' => $this->created_at->format('m/d/Y H:m'),
+            'updated_at' => $this->updated_at->format('m/d/Y H:m'),
         ];
     }
 }
