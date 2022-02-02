@@ -1,4 +1,8 @@
 export default function admin({ next, store }) {
-  if (store.getters["auth/isAdmin"]) next();
-  else next({ name: "notFound" });
+  const loginQuery = { path: "/login", query: { redirect: to.fullPath } };
+  if (!store.getters["auth/isAdmin"]) {
+    next(loginQuery);
+  } else {
+    next();
+  }
 }

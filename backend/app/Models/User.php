@@ -6,28 +6,33 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+
+// sanctum
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const ADMIN     = 0b1111111111;
+    const USER     = 0b0000000001;
+    const EDITOR    = 0b0000000010;
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'name',
         'email',
-        'avatar',
         'password',
+        'role',
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
+     * The attributes that should be hidden for serialization.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -35,22 +40,34 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
-        'is_admin' => 'boolean',
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Role
+     */
     public function isAdmin(): bool
     {
-      return $this->is_admin;
+        return ($this->role & User::ADMIN) == User::ADMIN;
     }
 
-    public function messages()
+    public function isUser(): bool
     {
-      return $this->hasMany(Message::class);
+        return ($this->role & User::USER) == User::USER;
+    }
+
+    public function isEditor(): bool
+    {
+        return ($this->role & User::EDITOR) == User::EDITOR;
+    }
+
+    public function hasRole($role): bool
+    {
+        return ($this->role & $role) == $role;
     }
 }

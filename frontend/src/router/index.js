@@ -1,10 +1,10 @@
 import Vue from "vue";
 import store from "@/store/index";
 import VueRouter from "vue-router";
-import auth from "@/middleware/auth";
-import admin from "@/middleware/admin";
+import user from "@/middleware/user";
 import guest from "@/middleware/guest";
 import middlewarePipeline from "@/router/middlewarePipeline";
+import editor from "@/middleware/editor";
 
 Vue.use(VueRouter);
 
@@ -14,25 +14,6 @@ const routes = [
     name: "home",
     meta: { middleware: [guest] },
     component: () => import(/* webpackChunkName: "home" */ "../views/Home"),
-  },
-  {
-    path: "/dashboard",
-    name: "dashboard",
-    meta: { middleware: [auth] },
-    component: () =>
-      import(/* webpackChunkName: "dashboard" */ "../views/Dashboard"),
-  },
-  {
-    path: "/user",
-    name: "user",
-    meta: { middleware: [auth] },
-    component: () => import(/* webpackChunkName: "user" */ "../views/User"),
-  },
-  {
-    path: "/users",
-    name: "users",
-    meta: { middleware: [auth, admin] },
-    component: () => import(/* webpackChunkName: "users" */ "../views/Users"),
   },
   {
     path: "/login",
@@ -48,27 +29,40 @@ const routes = [
       import(/* webpackChunkName: "register" */ "../views/Register"),
   },
   {
-    path: "/reset-password",
-    name: "resetPassword",
-    meta: { middleware: [guest] },
+    path: "/blogs",
+    name: "blogs-list",
+    meta: { middleware: [user] },
     component: () =>
-      import(/* webpackChunkName: "reset-password" */ "../views/ResetPassword"),
+      import(/* webpackChunkName: "register" */ "../views/Blog/Blogs"),
   },
   {
-    path: "/forgot-password",
-    name: "forgotPassword",
-    meta: { middleware: [guest] },
+    path: "/blogs/create",
+    name: "blog-create",
+    meta: { middleware: [editor] },
     component: () =>
-      import(
-        /* webpackChunkName: "forgot-password" */ "../views/ForgotPassword"
-      ),
+      import(/* webpackChunkName: "register" */ "../views/Blog/BlogPost"),
   },
   {
-    path: "/:catchAll(.*)",
-    name: "notFound",
+    path: "/blogs/view/:id",
+    name: "blog-view",
+    meta: { middleware: [user] },
     component: () =>
-      import(/* webpackChunkName: "not-found" */ "../views/NotFound"),
+      import(/* webpackChunkName: "register" */ "../views/Blog/BlogView"),
   },
+  {
+    path: "/blogs/update",
+    name: "blog-update",
+    meta: { middleware: [editor] },
+    component: () =>
+      import(/* webpackChunkName: "register" */ "../views/Blog/BlogPost"),
+  },
+  {
+    path: "*",
+    name: "not-found",
+    meta: { middleware: [guest] },
+    component: () =>
+      import(/* webpackChunkName: "register" */ "../views/NotFound"),
+  }
 ];
 
 const router = new VueRouter({

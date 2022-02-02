@@ -1,10 +1,10 @@
 <template>
-  <div class="max-w-lg p-5 m-auto">
+  <div class="p-5 h-full flex flex-col items-center justify-center">
     <article class="p-5">
       <h1
-        class="mb-2 text-6xl font-bold text-transparent bg-gradient-to-r bg-clip-text from-blue-500 to-green-500"
+        class="mb-2 text-6xl font-bold text-transparent bg-gradient-to-r bg-clip-text from-blue-500 to-green-500 text-center"
       >
-        4Oh4
+        4O4
       </h1>
       <p class="font-bold">
         The page you're looking for is not here.
