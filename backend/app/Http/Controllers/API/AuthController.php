@@ -53,10 +53,9 @@ class AuthController extends BaseController
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
-        $success['token'] =  $user->createToken($request->device_name)->plainTextToken;
-        $success['name'] =  $user->name;
+        $user['token'] =  $user->createToken($request->device_name)->plainTextToken;
    
-        return $this->sendResponse($success, 'User created successfully.');
+        return $this->sendResponse(new UserResource($user), 'User created successfully.');
     }
    
 }

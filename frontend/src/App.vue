@@ -1,6 +1,6 @@
 <template>
   <div id="app" style="min-height: 100vh; width: 100%">
-    <template v-if="!loading">
+    <template v-if="!initialLoading">
       <Header />
       <main class="container mx-auto" style="height: calc(100vh - 64px)">
         <router-view />
@@ -25,7 +25,7 @@ export default {
     Header,
   },
   computed: {
-    ...mapGetters('auth', ['loading'])
+    ...mapGetters('auth', ['initialLoading'])
   },
   mounted() {
     let token = getToken();

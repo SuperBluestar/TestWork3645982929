@@ -9,7 +9,8 @@ export const USER = 1;
 
 export const state = {
   user: null,
-  loading: true,
+  loading: false,
+  initialLoading: true,
   error: null,
 };
 
@@ -19,6 +20,9 @@ export const mutations = {
   },
   SET_LOADING(state, loading) {
     state.loading = loading;
+  },
+  SET_INITIALLOADING(state, loading) {
+    state.initialLoading = loading;
   },
   SET_ERROR(state, error) {
     state.error = error;
@@ -53,6 +57,7 @@ export const actions = {
       commit("SET_USER", null);
       commit("SET_ERROR", getError(error));
     }
+    commit("SET_INITIALLOADING", false);
   },
   async setAuth({ commit }, payload) {
     commit("SET_LOADING", true);
@@ -77,6 +82,26 @@ export const actions = {
     }
     commit("SET_LOADING", false);
   },
+  async register({ commit }, payload) {
+    commit("SET_LOADING", true);
+    try {
+      let res = await AuthService.registerUser(payload);
+      if (res.data.success) {
+        commit("SET_USER", res.data.data);
+        commit("SET_ERROR", "");
+        if( router.currentRoute.query.redirect ) {
+          router.push(router.currentRoute.query.redirect)
+        } else {
+          router.push("/blogs"); 
+        }
+      } else {
+        commit("SET_ERROR", res.data.message);
+      }
+    } catch(error) {
+      commit("SET_ERROR", getError(error));
+    }
+    commit("SET_LOADING", false);
+  }
 };
 
 export const getters = {
@@ -100,6 +125,9 @@ export const getters = {
   },
   loading: (state) => {
     return state.loading;
+  },
+  initialLoading: (state) => {
+    return state.initialLoading;
   },
   loggedIn: (state) => {
     return !!state.user;
