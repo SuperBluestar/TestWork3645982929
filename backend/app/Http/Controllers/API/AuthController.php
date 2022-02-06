@@ -71,7 +71,6 @@ class AuthController extends BaseController
             $message->to($to_email, $to_name)->subject("Laravel Test Mail");
             $message->from(env("MAIL_FROM_ADDRESS"),"Test Mail");
         });
-        // $user['token'] =  $user->createToken($request->device_name)->plainTextToken;
 
         return $this->sendResponse(new UserResource($user), 'User created successfully.');
     }
