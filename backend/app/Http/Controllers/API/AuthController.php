@@ -9,6 +9,7 @@ use Validator;
 use App\Models\User;
 use App\Http\Resources\User as UserResource;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends BaseController
 {
