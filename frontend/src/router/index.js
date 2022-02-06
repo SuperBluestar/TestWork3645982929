@@ -29,6 +29,20 @@ const routes = [
       import(/* webpackChunkName: "register" */ "../views/Register"),
   },
   {
+    path: "/forgot-password",
+    name: "forgot-password",
+    meta: { middleware: [guest] },
+    component: () =>
+      import(/* webpackChunkName: "register" */ "../views/ForgotPassword"),
+  },
+  {
+    path: "/reset-password",
+    name: "reset-password",
+    meta: { middleware: [guest] },
+    component: () =>
+      import(/* webpackChunkName: "register" */ "../views/ResetPassword"),
+  },
+  {
     path: "/blogs",
     name: "blogs-list",
     meta: { middleware: [user] },

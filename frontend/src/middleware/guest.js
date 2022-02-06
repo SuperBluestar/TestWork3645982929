@@ -1,3 +1,3 @@
-export default function guest({ next, store }) {
+export default function guest({ next }) {
   next();
 }
