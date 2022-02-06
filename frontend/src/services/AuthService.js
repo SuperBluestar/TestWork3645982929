@@ -27,7 +27,7 @@ export default {
     return authClient.post("/register", payload);
   },
   sendVerification(payload) {
-    return authClient.post("/email/verification-notification", payload);
+    return authClient.post("/email/verification", payload);
   },
   updateUser(payload) {
     return authClient.put("/user/profile-information", payload);

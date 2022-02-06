@@ -29,6 +29,13 @@ const routes = [
       import(/* webpackChunkName: "register" */ "../views/Register"),
   },
   {
+    path: "/email-verify/:email/:token",
+    name: "email-verify",
+    meta: { middleware: [guest] },
+    component: () =>
+      import(/* webpackChunkName: "register" */ "../views/EmailVerify"),
+  },
+  {
     path: "/forgot-password",
     name: "forgot-password",
     meta: { middleware: [guest] },

@@ -21,6 +21,7 @@ use App\Models\User;
 */
 Route::post('login', [AuthController::class, 'signin']);
 Route::post('register', [AuthController::class, 'signup']);
+Route::post('email/verification', [AuthController::class, 'emailVerify']);
 
 Route::middleware('auth:sanctum')->group( function () {
     Route::get('/user', [UserController::class, 'self']);

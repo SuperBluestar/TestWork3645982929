@@ -91,6 +91,7 @@ export const actions = {
     commit("SET_LOADING", true);
     try {
       let res = await AuthService.registerUser(payload);
+      console.log(res)
       const { data } = res;
       if (data.success) {
         setToken(data.data.token);
