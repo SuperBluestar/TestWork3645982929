@@ -24,5 +24,23 @@ class DatabaseSeeder extends Seeder
             'role' => User::ADMIN,
           ]
         );
+        \App\Models\User::factory(1)->create(
+          [
+            'name' => 'Tester',
+            'email' => 'test@gmail.com',
+            'email_verified_at' => date("Y-m-d H:i:s"),
+            'password' => Hash::make('111111'),
+            'role' => User::USER,
+          ],
+        );
+        \App\Models\User::factory(1)->create(
+          [
+            'name' => 'Editor',
+            'email' => 'editor@gmail.com',
+            'email_verified_at' => date("Y-m-d H:i:s"),
+            'password' => Hash::make('111111'),
+            'role' => User::EDITOR,
+          ],
+        );
     }
 }
