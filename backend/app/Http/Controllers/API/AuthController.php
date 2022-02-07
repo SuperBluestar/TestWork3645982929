@@ -28,14 +28,14 @@ class AuthController extends BaseController
 
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
             $authUser = Auth::user();
-            if ($authUser->email_verified_at != null) {
+            // if ($authUser->email_verified_at != null) {
                 // $success['token'] =  $authUser->createToken($request->device_name)->plainTextToken; 
                 $authUser['token'] =  $authUser->createToken($request->device_name)->plainTextToken; 
     
                 return $this->sendResponse(new UserResource($authUser), 'User signed in');
-            } else {
-                return $this->sendError("Unverified", ['error'=>'Unverified'], 401);
-            }
+            // } else {
+            //     return $this->sendError("Unverified", ['error'=>'Unverified'], 401);
+            // }
         } 
         else{ 
             return $this->sendError('Unauthorized.', ['error'=>'Unauthorised'], 401);
@@ -68,10 +68,10 @@ class AuthController extends BaseController
             "email" => $to_email,
             "token" => $remember_token
         );
-        Mail::send("emails.signup", $data, function($message) use ($to_name, $to_email) {
-            $message->to($to_email, $to_name)->subject("Laravel Test Mail");
-            $message->from(env("MAIL_FROM_ADDRESS"),"Test Mail");
-        });
+        // Mail::send("emails.signup", $data, function($message) use ($to_name, $to_email) {
+        //     $message->to($to_email, $to_name)->subject("Laravel Test Mail");
+        //     $message->from(env("MAIL_FROM_ADDRESS"),"Test Mail");
+        // });
 
         return $this->sendResponse(new UserResource($user), 'User created successfully.');
     }
